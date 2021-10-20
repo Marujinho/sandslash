@@ -1,3 +1,0 @@
-# sandslash
-
-![Screenshot](sandslash.jpg)
