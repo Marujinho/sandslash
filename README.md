@@ -2,7 +2,7 @@
 
 ![Screenshot](sandslash.jpg)
 <br />
-It does 3 things <br />
+It does 3 things <br /><br />
 1 - Gets all endpoints from a website <br />
 2 - Bruteforce sql injection <br />
 3 - Return a list of possible injectable enpoints <br />
