@@ -1,7 +1,7 @@
 # sandslash
 
 ![Screenshot](sandslash.jpg)
-
+<br />
 It does 3 things <br />
 1 - Gets all endpoints from a website <br />
 2 - Bruteforce sql injection <br />
@@ -9,5 +9,5 @@ It does 3 things <br />
 
 <br /><br />
 
-**under construction...** 
+**In construction...** 
 
