@@ -6,13 +6,11 @@ class Scratch(scrapy.Spider):
     name = 'scratch'
     base = 'https://br.indeed.com/'
     start_urls = ['https://br.indeed.com/']
-    urls = []
+    domainGroups = []
     regularLinks = []
     endpoints = []
     linksWithParameters = []
     visitedEndpoints = []
-    counter = 0
-
 
     def parse(self, response, **kwargs):
         self.visitedEndpoints.append(response.request.url)
@@ -32,13 +30,20 @@ class Scratch(scrapy.Spider):
                 yield scrapy.Request(url=url, callback=self.parse)
 
     def filterUrl(self, url):
-        print("Doing my thing...")
+        print("Doing my thing on: " + url)
         link = url.split('.com/')
 
         if(len(link) > 1):
             r = requests.get(self.base + link[1])
-            str_1 = pd.Series([link[1]])
-            has_parameter = str_1.str.contains('?', regex=False)
+            linkStr = pd.Series([link[1]])
+
+            has_slashes = linkStr.str.contains('/', regex=False)
+            has_parameter = linkStr.str.contains('?', regex=False)
+
+            if(has_slashes):
+                self.treatLinkWithSlashes(linkStr)
+
+            #>>>>>>>>>>>>>>>>>>>>>>>>>
 
             if (r.status_code == 200) and self.base + link[1] not in self.visitedEndpoints:
                 self.endpoints.append(self.base + link[1])
@@ -50,6 +55,21 @@ class Scratch(scrapy.Spider):
         print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
         print(self.endpoints)
         print(len(self.endpoints))
+
+    def treatLinkWithSlashes(self, link):
+        has_slashes = link.str.contains('/', regex=False)
+
+        if(has_slashes):
+            domain = link.split('/')
+            self.domainGroups.append(self.base + domain[0])
+            return self.treatLinkWithSlashes(domain[1])
+
+        return link
+
+
+
+
+
 
 
 
